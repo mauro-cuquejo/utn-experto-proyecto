@@ -19,20 +19,6 @@ let publicacionesRouter = require('./routes/admin/publicaciones');
 var apiRouter = require('./routes/api');
 
 
-let secured = (req, res, next) => {
-  try {
-    console.log(req.session.id_usuario);
-    if (req.session.id_usuario) {
-      next();
-    } else {
-      res.redirect('/admin/login');
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
 var app = express();
 
 // view engine setup
@@ -49,16 +35,41 @@ app.use(express.static(path.join(__dirname, 'public')));
 let datosSesion = {
   secret: 'aoisdjasoijd12312oij2',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
 };
 
 app.use(session(datosSesion));
 
-app.use('/', indexRouter);
-app.use('/admin/usuarios', usersRouter);
-app.use('/admin/login', loginRouter);
-app.use('/admin/publicaciones', secured, publicacionesRouter);
-app.use('/api', cors(), apiRouter);
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
+
+//app.use(cors({origin: 'http://localhost:3001', credentials: true}));
+
+let secured = (req, res, next) => {
+  try {
+    console.log(req.session)
+    console.log("id usuario: " + req.session.id_usuario);
+    if (req.session.id_usuario) {
+      next();
+    } else {
+      throw new Error("Usuario deslogueado");
+    }
+  } catch (error) {
+    res.status(422);
+    res.json({
+      error: true,
+      message: error.message
+    });
+  }
+}
+
+app.use('/', cors({ origin: 'http://localhost:3001', credentials: true }), indexRouter);
+app.use('/admin/usuarios', cors({ origin: 'http://localhost:3001', credentials: true }), usersRouter);
+app.use('/admin/login', cors({ origin: 'http://localhost:3001', credentials: true }), loginRouter);
+app.use('/admin/publicaciones', cors({ origin: 'http://localhost:3001', credentials: true }), publicacionesRouter);
+app.use('/api', cors({ origin: 'http://localhost:3001', credentials: true }), apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

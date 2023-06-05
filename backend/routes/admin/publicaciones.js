@@ -10,35 +10,39 @@ const destroy = util.promisify(cloudinary.uploader.destroy);
 
 
 router.get('/', async (req, res, next) => {
-    let username = req.session?.username ?? "";
+    try {
+        let username = req.session?.username ?? "";
 
-    let publicaciones = await publicacionesModel.getPublicaciones();
+        let publicaciones = await publicacionesModel.getPublicaciones();
 
-    publicaciones = await publicaciones.map(publicacion => {
-        if (publicacion.imagen_id) {
-            const imagen = cloudinary.image(publicacion.imagen_id, {
-                width: 100,
-                height: 100,
-                crop: 'fill'
-            });
-            return {
-                ...publicacion,
-                imagen
+        publicaciones = await publicaciones.map(publicacion => {
+            if (publicacion.imagen_id) {
+                const imagen = cloudinary.image(publicacion.imagen_id, {
+                    width: 100,
+                    height: 100,
+                    crop: 'fill'
+                });
+                return {
+                    ...publicacion,
+                    imagen
+                }
+            } else {
+                return {
+                    ...publicacion,
+                    imagen: ''
+                }
             }
-        } else {
-            return {
-                ...publicacion,
-                imagen: ''
-            }
-        }
-    });
+        });
 
-    res.status(200);
-    res.json({
-        anio: await helpers.getAnio(),
-        username,
-        publicaciones
-    })
+        res.status(200);
+        res.json({
+            anio: await helpers.getAnio(),
+            username,
+            publicaciones
+        })
+    } catch (error) {
+        console.log("error")
+    }
 });
 
 

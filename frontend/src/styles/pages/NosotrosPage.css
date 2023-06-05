@@ -1,0 +1,44 @@
+.nosotros {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.quienes_somos {
+    font-size: 12px;
+    width: 50%;
+}
+
+
+.staff {
+    width: 50%;
+}
+
+
+.staff .personas .contenedor_carousel {
+
+    border-radius: 50px;
+    width: 18%;
+    padding: 13px;
+    box-sizing: border-box;
+
+}
+
+.staff .personas .contenedor_carousel img {
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.staff .personas .contenedor_carousel span {
+    margin: 0;
+    font-weight: normal;
+    color: #2e64a1;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+    height: 3rem;
+    text-align: center;
+    border-radius: 0.25rem;
+}

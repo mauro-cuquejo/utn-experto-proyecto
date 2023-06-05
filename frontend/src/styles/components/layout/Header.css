@@ -1,0 +1,13 @@
+header {
+    background: #2e64a1;
+}
+
+header h1 {
+    color: white;
+    font-size: 40px;
+    font-weight: 500;
+    display: inline-block;
+    position: relative;
+    bottom: 35px;
+    margin-left: 10px;
+}

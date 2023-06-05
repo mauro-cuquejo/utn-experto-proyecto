@@ -24,10 +24,11 @@ router.post('/', async (req, res, next) => {
         let password = req.body.password;
 
         let dataUsuario = await usuariosModel.getUsuarioByUsenameAndPassword(username, password);
-        let dataRol = await rolesModel.getRolById(dataUsuario.id_rol);
-        let dataEstado = await estadosModel.getEstadoById(dataUsuario.id_estado);
 
         if (dataUsuario != undefined) {
+
+            let dataRol = await rolesModel.getRolById(dataUsuario.id_rol);
+            let dataEstado = await estadosModel.getEstadoById(dataUsuario.id_estado);
 
             let usuario = {
                 nombre: dataUsuario.nombre,
@@ -42,6 +43,9 @@ router.post('/', async (req, res, next) => {
             req.session.id_estado = dataUsuario.id_estado;
             req.session.id_rol = dataUsuario.id_rol;
             req.session.username = dataUsuario.username;
+
+            console.log("prueba " + req.session.id_usuario)
+
             res.status(201)
             res.json({
                 usuario: usuario,

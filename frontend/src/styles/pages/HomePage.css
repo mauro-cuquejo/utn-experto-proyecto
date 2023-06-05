@@ -1,0 +1,35 @@
+.bienvenidos {
+    width: 50%;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.empresas .testimonio {
+    background-color: #ccc;
+    padding: 16px;
+
+}
+
+.empresas{
+    width: 50%;
+}
+
+.empresas .cita {
+    font-weight: bold;
+    font-style: italic;
+    font-style: 22px;
+    background-color: rgb(229, 229, 189);
+    display: block;
+    height: 3rem;
+    text-align: center;
+    border-radius: 0.25rem;
+
+}
+
+
+
+.columnas {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
