@@ -39,13 +39,6 @@ router.post('/', async (req, res, next) => {
                 username: dataUsuario.username
             }
 
-            req.session.id_usuario = dataUsuario.id;
-            req.session.id_estado = dataUsuario.id_estado;
-            req.session.id_rol = dataUsuario.id_rol;
-            req.session.username = dataUsuario.username;
-
-            console.log("prueba " + req.session.id_usuario)
-
             res.status(201)
             res.json({
                 usuario: usuario,

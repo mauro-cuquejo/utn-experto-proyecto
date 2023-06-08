@@ -3,12 +3,12 @@ import '../styles/pages/LoginPage.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
-const LoginPage = (props) => {
+const LoginPage = ({ loggedIn, setLoggedIn }) => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+
 
     const handlerCambioUsername = (event) => {
         setUsername(event.target.value);
@@ -25,20 +25,24 @@ const LoginPage = (props) => {
             const response = await axios.post('http://localhost:3000/admin/login', {
                 username,
                 password,
-                withCredentials: true
             });
+
             console.log(response.status)
             //verificar el resultado de la response:
             if (response.status === 201) {
-                navigate('/');
+                setLoggedIn(true);
+                navigate("/")
             } else {
                 //acá revisar si puedo reutilizar el mensaje que viene desde el backend. Igual mejor no usarlo.
                 setError('Error en la autenticación');
+                setLoggedIn(false);
             }
         } catch (error) {
-            setError('Error en la solicitud');
+            setError('Error en la solicitud' + error);
+            setLoggedIn(false);
         }
     };
+    console.log(loggedIn)
 
     return (
         <main className="holder login">
@@ -60,6 +64,9 @@ const LoginPage = (props) => {
             </div>
         </main>
     );
+
+
+
 
 }
 

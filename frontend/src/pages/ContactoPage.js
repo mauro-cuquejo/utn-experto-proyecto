@@ -1,7 +1,17 @@
-import React from "react";
+import { useEffect } from 'react';
 import '../styles/pages/ContactoPage.css'
+import { useNavigate } from 'react-router-dom';
 
-const ContactoPage = (props) => {
+const ContactoPage = ({ loggedIn, setLoggedIn }) => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const cargarContactoPage = async () => {
+            if (!loggedIn) {
+                navigate('/login')
+            }
+        }
+        cargarContactoPage();
+    }, [loggedIn, navigate]);
     return (
         <main className="holder contacto">
             <div>

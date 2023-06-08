@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../../styles/components/layout/Nav.css'
 
-const Nav = (props) => {
+const Nav = ({ loggedIn, setLoggedIn }) => {
     return (
         <nav>
             <div>
@@ -11,6 +11,7 @@ const Nav = (props) => {
                     <li><NavLink to='/nosotros' className={({ isActive }) => isActive ? 'activo' : undefined}>Nosotros</NavLink></li>
                     <li><NavLink to='/publicaciones' className={({ isActive }) => isActive ? 'activo' : undefined}>Publicaciones</NavLink></li>
                     <li><NavLink to='/contacto' className={({ isActive }) => isActive ? 'activo' : undefined}>Contacto</NavLink></li>
+                    {loggedIn && <a href='/logout' className="nav-link">Cerrar Sesion</a>}
                 </ul>
             </div>
         </nav>

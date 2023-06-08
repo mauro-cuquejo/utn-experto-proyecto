@@ -1,8 +1,18 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Carousel from '../components/layout/Carousel';
 import '../styles/pages/NosotrosPage.css'
+import { useNavigate } from 'react-router-dom';
 
-const NosotrosPage = (props) => {
+const NosotrosPage = ({ loggedIn, setLoggedIn }) => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const cargarNosotrosPage = async () => {
+            if (!loggedIn) {
+                navigate('/login')
+            }
+        }
+        cargarNosotrosPage();
+    }, [loggedIn, navigate]);
     const arr = [
         { src: 'images/home/nosotros/carlitos.png', key: 'carlitos', width: '500px', alt: 'logo empresa capisci', opt: 'Carlitos' },
         { src: 'images/home/nosotros/ingrid.png', key: 'ingrid', width: '500px', alt: 'logo empresa catslock', opt: 'Ingrid' },

@@ -1,9 +1,19 @@
-import React from 'react';
+import { useEffect } from 'react';
 import Carousel from '../components/layout/Carousel';
 import '../styles/pages/HomePage.css'
+import { useNavigate } from 'react-router-dom';
 
 
-const HomePage = (props) => {
+const HomePage = ({ loggedIn, setLoggedIn }) => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const cargarNosotrosPage = async () => {
+            if (!loggedIn) {
+                navigate('/login')
+            }
+        }
+        cargarNosotrosPage();
+    }, [loggedIn, navigate]);
     const arr = [
         { src: 'images/home/empresas/capisci.png', key: 'capisci', width: '500px', alt: 'logo empresa capisci', opt: 'Simplemente excelente' },
         { src: 'images/home/empresas/catslock.png', key: 'catslock', width: '500px', alt: 'logo empresa catslock', opt: 'Muy profesionales. Siempre atentos a lo que necesitábamos' },

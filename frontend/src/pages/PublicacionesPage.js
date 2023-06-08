@@ -4,33 +4,33 @@ import '../styles/pages/PublicacionesPage.css';
 import PublicacionItem from '../components/publicaciones/PublicacionItem';
 import { useNavigate } from 'react-router-dom';
 
-const PublicacionesPage = (props) => {
+const PublicacionesPage = ({ loggedIn, setLoggedIn }) => {
     const [loading, setLoading] = useState(false);
     const [publicaciones, setPublicaciones] = useState([]);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
-
     useEffect(() => {
         const cargarPublicaciones = async () => {
-            setLoading(true);
-            try {
-                const response = await axios.get('http://localhost:3000/admin/publicaciones', {
-                    withCredentials: true
-                });
-                console.log(response.status)
+            if (loggedIn) {
+                setLoading(true);
+                try {
+                    const response = await axios.get('http://localhost:3000/admin/publicaciones');
 
-                console.log(response.data)
-                setPublicaciones(response.data.publicaciones);
-                setLoading(false);
-            } catch (error) {
+                    setPublicaciones(response.data.publicaciones);
+                    setLoading(false);
+                } catch (error) {
+                    setError("Error durante la carga de publicaciones.");
+                }
+            } else {
                 navigate('/login')
             }
         }
         cargarPublicaciones();
-    }, [navigate]);
-
+    }, [loggedIn, setLoggedIn, navigate]);
 
     return (
         <section className='holder publicaciones'>
+            {error && <div className="alert alert-danger" role="alert">{error}</div>}
             <div>
                 <h2>Publicaciones</h2>
             </div>
