@@ -29,6 +29,7 @@ async function getUsuarioByUsername(username) {
     try {
         let query = "select * from usuarios where username = ? limit 1";
         let rows = await pool.query(query, [username]);
+        console.log(rows);
         return rows[0];
 
     } catch (error) {

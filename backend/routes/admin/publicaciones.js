@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let publicacionesModel = require('../../models/publicacionesModel')
+let usuariosModel = require('../../models/usuariosModel')
 let helpers = require('../../helpers/helpers')
 let util = require('util');
 let cloudinary = require('cloudinary').v2;
@@ -11,9 +12,21 @@ const destroy = util.promisify(cloudinary.uploader.destroy);
 
 router.get('/', async (req, res, next) => {
     try {
-        let username = req.session?.username ?? "";
+        console.log(req.query);
+        let username = req.query?.user;
+        let usuario;
+        if (username != "") {
+            usuario = await usuariosModel.getUsuarioByUsername(username);
+        }
+        console.log("id_usuario: " + usuario?.id)
 
-        let publicaciones = await publicacionesModel.getPublicaciones();
+        let publicaciones;
+        if (usuario) {
+            publicaciones = await publicacionesModel.getPublicacionesByIdUsuario(usuario?.id);
+        } else {
+            publicaciones = await publicacionesModel.getPublicaciones();
+        }
+        console.log(publicaciones);
 
         publicaciones = await publicaciones.map(publicacion => {
             if (publicacion.imagen_id) {
@@ -34,14 +47,20 @@ router.get('/', async (req, res, next) => {
             }
         });
 
-        res.status(200);
+
+        res.status(publicaciones.length > 0 ? 200 : 204);
         res.json({
             anio: await helpers.getAnio(),
             username,
             publicaciones
         })
     } catch (error) {
-        console.log("error")
+        res.status(422);
+        res.json({
+            anio: await helpers.getAnio(),
+            error: true,
+            message: "Error en consulta"
+        })
     }
 });
 

@@ -4,7 +4,8 @@ import '../styles/pages/PublicacionesPage.css';
 import PublicacionItem from '../components/publicaciones/PublicacionItem';
 import { useNavigate } from 'react-router-dom';
 
-const PublicacionesPage = ({ loggedIn, setLoggedIn }) => {
+const PublicacionesPage = ({ user, loggedIn, setLoggedIn }) => {
+    console.log(user);
     const [loading, setLoading] = useState(false);
     const [publicaciones, setPublicaciones] = useState([]);
     const [error, setError] = useState('');
@@ -13,41 +14,49 @@ const PublicacionesPage = ({ loggedIn, setLoggedIn }) => {
         const cargarPublicaciones = async () => {
             if (loggedIn) {
                 setLoading(true);
+                setError(undefined);
                 try {
-                    const response = await axios.get('http://localhost:3000/admin/publicaciones');
-
-                    setPublicaciones(response.data.publicaciones);
+                    const response = await axios.get('http://localhost:3000/admin/publicaciones', { params: { user: user } });
+                    if (response.status === 200 || response.status === 204) {
+                        setPublicaciones(response.data.publicaciones);
+                    } else {
+                        throw new Error();
+                    }
                     setLoading(false);
                 } catch (error) {
-                    setError("Error durante la carga de publicaciones.");
+                    setError("Error durante la carga de publicaciones: " + error);
                 }
             } else {
                 navigate('/login')
             }
         }
         cargarPublicaciones();
-    }, [loggedIn, setLoggedIn, navigate]);
-
-    return (
-        <section className='holder publicaciones'>
-            {error && <div className="alert alert-danger" role="alert">{error}</div>}
-            <div>
-                <h2>Publicaciones</h2>
-            </div>
-            {loading ? (
-                <p>Cargando...</p>
-            ) : (
-
-
-                publicaciones.map(item => <PublicacionItem key={item.id}
-                    titulo={item.titulo}
-                    descripcion={item.contenido}
-                    precio={item.precio}
-                    imagen={item.imagen} />)
-            )}
-
+    }, [user, loggedIn, navigate]);
+    if (publicaciones.length > 0) {
+        return (
+            <section className='holder publicaciones'>
+                {error && <div className="alert alert-danger" role="alert">{error}</div>}
+                <div>
+                    <h2>Publicaciones</h2>
+                </div>
+                {loading ? (
+                    <p>Cargando...</p>
+                ) : (
+                    publicaciones.map(item => <PublicacionItem key={item.id}
+                        titulo={item.titulo}
+                        descripcion={item.contenido}
+                        precio={item.precio}
+                        imagen={item.imagen} />)
+                )}
+            </section>
+        );
+    } else {
+        return (<section className='holder publicaciones'>
+            <p>No se encontraron publicaciones {user ? "para el usuario " + user : ""}</p>
         </section>
-    );
+        );
+    }
+
 }
 
 export default PublicacionesPage;

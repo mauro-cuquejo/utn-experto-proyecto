@@ -6,6 +6,12 @@ async function getPublicaciones() {
     return rows;
 }
 
+async function getPublicacionesByIdUsuario(id_usuario) {
+    let query = "select * from publicaciones where id_usuario = ? order by id desc";
+    let rows = await pool.query(query, [id_usuario]);
+    return rows;
+}
+
 async function insertPublicacion(obj) {
     try {
 
@@ -53,4 +59,4 @@ async function modificarPublicacionById(obj, id) {
     }
 }
 
-module.exports = { getPublicaciones, insertPublicacion, deletePublicacionById, getPublicacionById, modificarPublicacionById }
+module.exports = { getPublicaciones, getPublicacionesByIdUsuario, insertPublicacion, deletePublicacionById, getPublicacionById, modificarPublicacionById }

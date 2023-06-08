@@ -3,7 +3,7 @@ import '../styles/pages/LoginPage.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = ({ loggedIn, setLoggedIn }) => {
+const LoginPage = ({ setUser, loggedIn, setLoggedIn }) => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -31,14 +31,17 @@ const LoginPage = ({ loggedIn, setLoggedIn }) => {
             //verificar el resultado de la response:
             if (response.status === 201) {
                 setLoggedIn(true);
+                setUser(username);
                 navigate("/")
             } else {
                 //acá revisar si puedo reutilizar el mensaje que viene desde el backend. Igual mejor no usarlo.
                 setError('Error en la autenticación');
+                setUser(undefined);
                 setLoggedIn(false);
             }
         } catch (error) {
             setError('Error en la solicitud' + error);
+            setUser(undefined);
             setLoggedIn(false);
         }
     };

@@ -9,9 +9,10 @@ const Nav = ({ loggedIn, setLoggedIn }) => {
                 <ul>
                     <li><NavLink to='/' className={({ isActive }) => isActive ? 'activo' : undefined}>Home</NavLink></li>
                     <li><NavLink to='/nosotros' className={({ isActive }) => isActive ? 'activo' : undefined}>Nosotros</NavLink></li>
+                    {loggedIn && <li><NavLink to='/mis-publicaciones' className={({ isActive }) => isActive ? 'activo' : undefined}>Mis Publicaciones</NavLink></li>}
                     <li><NavLink to='/publicaciones' className={({ isActive }) => isActive ? 'activo' : undefined}>Publicaciones</NavLink></li>
                     <li><NavLink to='/contacto' className={({ isActive }) => isActive ? 'activo' : undefined}>Contacto</NavLink></li>
-                    {loggedIn && <a href='/logout' className="nav-link">Cerrar Sesion</a>}
+                    {loggedIn && <li><a href='/logout' className="nav-link">Cerrar Sesion</a></li>}
                 </ul>
             </div>
         </nav>
