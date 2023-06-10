@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../styles/pages/ContactoPage.css'
+import '../styles/pages/ModificarPage.css'
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -89,12 +89,12 @@ const ModificarPage = ({ user, loggedIn }) => {
         }
     };
     return (
-        <main className="holder contacto">
+        <main className="holder modificar">
 
             <div className="container" margin="100px auto">
                 <div className="row">
                     <div className="col-6 offset-3">
-                        <form onSubmit={handlerSubmit}>
+                        <form className="formulario" onSubmit={handlerSubmit}>
                             {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
                             <div className="form-group">

@@ -35,9 +35,8 @@ async function deletePublicacionById(id) {
 
 async function getPublicacionById(id) {
     try {
-        let query = "select * from publicaciones where id = ? ";
-        let rows = await pool.query(query, [id]);
-
+        let query = "select * from publicaciones where id = ?";
+        let rows = await pool.query(query, id);
         return rows[0];
     } catch (error) {
         throw error;

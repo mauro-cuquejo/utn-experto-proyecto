@@ -28,7 +28,7 @@ function App() {
           <Route path='/publicaciones' element={<PublicacionesPage user={undefined} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/agregar' element={<AgregarPage user={user} loggedIn={loggedIn} />} />
           <Route path='/modificar/:id' element={<ModificarPage user={user} loggedIn={loggedIn} />} />
-          <Route path='/eliminar/*' element={<EliminarPage user={user} loggedIn={loggedIn} />} />
+          <Route path='/eliminar/:id' element={<EliminarPage user={user} loggedIn={loggedIn} />} />
           <Route path='/mis-publicaciones' element={<PublicacionesPage user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/contacto' element={<ContactoPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/login' element={<LoginPage user={user} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />

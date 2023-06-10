@@ -1,9 +1,10 @@
-.contacto {
+.modificar {
     display: flex;
+    flex-direction: column;
     gap: 24px;
 }
 
-.contacto div {
+.modificar div {
     width: 100%;
 }
 

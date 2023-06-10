@@ -217,9 +217,9 @@ router.get('/eliminar/:id', async (req, res, next) => {
 
 router.delete('/eliminar', async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.query.id;
 
-        let publicacion = await publicacionesModel.getPublicacionById(req.body.id);
+        let publicacion = await publicacionesModel.getPublicacionById(id);
         if (!publicacion) {
             throw new Error("no se encontró la publicación solicitada");
         }
@@ -227,7 +227,7 @@ router.delete('/eliminar', async (req, res, next) => {
             await (destroy(publicacion.imagen));
         }
         try {
-            await publicacionesModel.deletePublicacionById(req.body.id);
+            await publicacionesModel.deletePublicacionById(id);
             res.status(201);
             res.json({ anio: await helpers.getAnio() });
         } catch (error) {
