@@ -27,7 +27,6 @@ const LoginPage = ({ setUser, loggedIn, setLoggedIn }) => {
                 password,
             });
 
-            console.log(response.status)
             //verificar el resultado de la response:
             if (response.status === 201) {
                 setLoggedIn(true);
@@ -45,7 +44,6 @@ const LoginPage = ({ setUser, loggedIn, setLoggedIn }) => {
             setLoggedIn(false);
         }
     };
-    console.log(loggedIn)
 
     return (
         <main className="holder login">
@@ -53,14 +51,19 @@ const LoginPage = ({ setUser, loggedIn, setLoggedIn }) => {
             <div className="container">
                 <div className="row" margin="200px 0;">
                     <div className="col">
-                        <form onSubmit={handlerSubmit}>
+                        <form className="formulario" onSubmit={handlerSubmit}>
                             <div className="form-group">
+                                <label htmlFor="username">Nombre de usuario:</label>
                                 <input type="text" value={username} className="form-control" placeholder="Usuario" name="username" onChange={handlerCambioUsername} />
                             </div>
                             <div className="form-group">
+                                <label htmlFor="password">Password:</label>
                                 <input type="password" value={password} className="form-control" placeholder="Password" name="password" onChange={handlerCambioPassword} />
                             </div>
-                            <button type="submit" className="btn btn-primary">Entrar</button>
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-primary">Entrar</button>
+
+                            </div>
                         </form>
                     </div>
                 </div>

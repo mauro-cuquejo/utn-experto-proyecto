@@ -18,19 +18,19 @@ const ContactoPage = ({ loggedIn, setLoggedIn }) => {
                 <h2>Contacto Rápido</h2>
                 <form action="" method="" className="formulario">
                     <p>
-                        <label for="nombre">Nombre</label>
+                        <label htmlFor="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre" />
                     </p>
                     <p>
-                        <label for="email">Email</label>
+                        <label htmlFor="email">Email</label>
                         <input type="text" id="email" name="email" />
                     </p>
                     <p>
-                        <label for="telefono">Telefono</label>
+                        <label htmlFor="telefono">Telefono</label>
                         <input type="text" id="telefono" name="telefono" />
                     </p>
                     <p>
-                        <label for="mensaje">Mensaje</label>
+                        <label htmlFor="mensaje">Mensaje</label>
                         <textarea id="mensaje" name="mensaje"></textarea>
                     </p>
                     <p className="acciones">

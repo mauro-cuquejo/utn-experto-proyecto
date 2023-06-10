@@ -12,7 +12,7 @@ const Nav = ({ loggedIn, setLoggedIn }) => {
                     {loggedIn && <li><NavLink to='/mis-publicaciones' className={({ isActive }) => isActive ? 'activo' : undefined}>Mis Publicaciones</NavLink></li>}
                     <li><NavLink to='/publicaciones' className={({ isActive }) => isActive ? 'activo' : undefined}>Publicaciones</NavLink></li>
                     <li><NavLink to='/contacto' className={({ isActive }) => isActive ? 'activo' : undefined}>Contacto</NavLink></li>
-                    {loggedIn && <li><a href='/logout' className="nav-link">Cerrar Sesion</a></li>}
+                    {loggedIn && <li><NavLink to='/logout' className="nav-link">Cerrar Sesion</NavLink></li>}
                 </ul>
             </div>
         </nav>

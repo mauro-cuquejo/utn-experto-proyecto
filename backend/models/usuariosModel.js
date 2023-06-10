@@ -29,7 +29,6 @@ async function getUsuarioByUsername(username) {
     try {
         let query = "select * from usuarios where username = ? limit 1";
         let rows = await pool.query(query, [username]);
-        console.log(rows);
         return rows[0];
 
     } catch (error) {
@@ -66,7 +65,6 @@ async function insertUsuario(obj) {
         let rows = await pool.query(query, [obj]);
         return rows;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
@@ -77,7 +75,6 @@ async function deleteUsuarioById(id) {
         let rows = await pool.query(query, [id]);
         return rows;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
@@ -88,7 +85,6 @@ async function modificarUsuarioById(obj, id) {
         let rows = await pool.query(query, [obj, id]);
         return rows;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }

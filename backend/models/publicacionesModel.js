@@ -19,7 +19,6 @@ async function insertPublicacion(obj) {
         let rows = await pool.query(query, [obj]);
         return rows;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
@@ -30,7 +29,6 @@ async function deletePublicacionById(id) {
         let rows = await pool.query(query, [id]);
         return rows;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
@@ -42,7 +40,6 @@ async function getPublicacionById(id) {
 
         return rows[0];
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
@@ -51,10 +48,9 @@ async function modificarPublicacionById(obj, id) {
     try {
         let query = "update publicaciones set ? where id = ? ";
         let rows = await pool.query(query, [obj, id]);
-        console.log(rows)
         return rows;
     } catch (error) {
-        console.log(error);
+
         throw error;
     }
 }

@@ -1,0 +1,8 @@
+.publicaciones img {
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+}
+
+.tarjeta {
+    margin-bottom: 2rem;
+}

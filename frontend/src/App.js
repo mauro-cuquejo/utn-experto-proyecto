@@ -10,6 +10,9 @@ import ContactoPage from './pages/ContactoPage';
 import './App.css'
 import LoginPage from './pages/LoginPage';
 import LogoutPage from './pages/LogoutPage';
+import AgregarPage from './pages/AgregarPage';
+import ModificarPage from './pages/ModificarPage';
+import EliminarPage from './pages/EliminarPage';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -23,6 +26,9 @@ function App() {
           <Route index path='/' element={<HomePage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/nosotros' element={<NosotrosPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/publicaciones' element={<PublicacionesPage user={undefined} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+          <Route path='/agregar' element={<AgregarPage user={user} loggedIn={loggedIn} />} />
+          <Route path='/modificar/:id' element={<ModificarPage user={user} loggedIn={loggedIn} />} />
+          <Route path='/eliminar/*' element={<EliminarPage user={user} loggedIn={loggedIn} />} />
           <Route path='/mis-publicaciones' element={<PublicacionesPage user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/contacto' element={<ContactoPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/login' element={<LoginPage user={user} setUser={setUser} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />

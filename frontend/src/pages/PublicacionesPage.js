@@ -3,9 +3,9 @@ import axios from 'axios';
 import '../styles/pages/PublicacionesPage.css';
 import PublicacionItem from '../components/publicaciones/PublicacionItem';
 import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const PublicacionesPage = ({ user, loggedIn, setLoggedIn }) => {
-    console.log(user);
     const [loading, setLoading] = useState(false);
     const [publicaciones, setPublicaciones] = useState([]);
     const [error, setError] = useState('');
@@ -42,18 +42,29 @@ const PublicacionesPage = ({ user, loggedIn, setLoggedIn }) => {
                 {loading ? (
                     <p>Cargando...</p>
                 ) : (
-                    publicaciones.map(item => <PublicacionItem key={item.id}
-                        titulo={item.titulo}
-                        descripcion={item.contenido}
-                        precio={item.precio}
-                        imagen={item.imagen} />)
+                    publicaciones.map(item =>
+                        <PublicacionItem
+                            user={user}
+                            id={item.id}
+                            titulo={item.titulo}
+                            contenido={item.contenido}
+                            precio={item.precio}
+                            imagen={item.imagen}
+                        />)
                 )}
+                {user && <div className="col-3 text-right">
+                    <NavLink to="/agregar" className="btn btn-primary"><i className="fa fa-plus"></i></NavLink>
+                </div>}
             </section>
         );
     } else {
         return (<section className='holder publicaciones'>
             <p>No se encontraron publicaciones {user ? "para el usuario " + user : ""}</p>
+            {user && <div className="col-3 text-right">
+                <NavLink to="/agregar" className="btn btn-primary"><i className="fa fa-plus"></i></NavLink>
+            </div>}
         </section>
+
         );
     }
 

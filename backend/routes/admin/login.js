@@ -12,9 +12,7 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/logout', async function (req, res, next) {
-    console.log(req.session.id_usuario)
     req.session.destroy();
-    console.log(req.session?.id_usuario ?? 'ya no hay usuario')
     res.json({ anio: await helpers.getAnio() });
 });
 
@@ -45,15 +43,15 @@ router.post('/', async (req, res, next) => {
                 anio: await helpers.getAnio(),
             });
         } else {
-            res.status(422)
-            res.json({
-                anio: await helpers.getAnio(),
-                error: true,
-                message: "Usuario o Password Incorrectos"
-            });
+            throw new Error("Usuario y/o Password Incorrectos")
         }
     } catch (error) {
-        console.log(error);
+        res.status(422)
+        res.json({
+            anio: await helpers.getAnio(),
+            error: true,
+            message: error.message
+        });
 
     }
 })

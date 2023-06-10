@@ -2,6 +2,8 @@ let express = require('express');
 let router = express.Router();
 let publicacionesModel = require('../../models/publicacionesModel')
 let usuariosModel = require('../../models/usuariosModel')
+let rolesModel = require('../../models/rolesModel')
+let estadosModel = require('../../models/estadosModel')
 let helpers = require('../../helpers/helpers')
 let util = require('util');
 let cloudinary = require('cloudinary').v2;
@@ -12,13 +14,11 @@ const destroy = util.promisify(cloudinary.uploader.destroy);
 
 router.get('/', async (req, res, next) => {
     try {
-        console.log(req.query);
         let username = req.query?.user;
         let usuario;
         if (username != "") {
             usuario = await usuariosModel.getUsuarioByUsername(username);
         }
-        console.log("id_usuario: " + usuario?.id)
 
         let publicaciones;
         if (usuario) {
@@ -26,13 +26,12 @@ router.get('/', async (req, res, next) => {
         } else {
             publicaciones = await publicacionesModel.getPublicaciones();
         }
-        console.log(publicaciones);
 
         publicaciones = await publicaciones.map(publicacion => {
             if (publicacion.imagen_id) {
                 const imagen = cloudinary.image(publicacion.imagen_id, {
-                    width: 100,
-                    height: 100,
+                    width: 540,
+                    height: 540,
                     crop: 'fill'
                 });
                 return {
@@ -75,18 +74,20 @@ router.get('/agregar', async function (req, res, next) {
 router.post('/agregar', async (req, res, next) => {
     try {
         let imagen_id = "";
-        console.log(req.files);
-        console.log(req.body);
 
         if (req.files && Object.keys(req.files).length > 0) {
             let archivo_imagen = req.files.imagen;
-            console.log(req.files[0])
-            imagen_id = (await uploader(archivo_imagen)).public_id;
+            imagen_id = (await uploader(archivo_imagen.tempFilePath)).public_id;
         }
 
-        let id_usuario = req.session?.id_usuario ?? '';
-        let id_estado = req.session?.id_estado ?? '';
-        let id_rol = req.session?.id_rol ?? '';
+        let usuario = await usuariosModel.getUsuarioByUsername(req.body.username);
+        let id_usuario = usuario.id;
+        let estado = await estadosModel.getEstadoById(id_usuario);
+        let id_estado = estado.id;
+
+        let rol = rolesModel.getRolById(id_usuario);
+        let id_rol = rol.id;
+
         let fecha = new Date();
 
         if (Object.keys(req.body).length == 0) {
@@ -94,7 +95,7 @@ router.post('/agregar', async (req, res, next) => {
         }
 
         if (req.body.titulo != "" && req.body.contenido != "" && req.body.precio != "") {
-            await publicacionesModel.insertPublicacion({ ...req.body, imagen_id, id_usuario, id_estado, fecha_creacion: fecha, fecha_actualizacion: fecha });
+            await publicacionesModel.insertPublicacion({ titulo: req.body.titulo, contenido: req.body.contenido, precio: req.body.precio, imagen_id, id_usuario, id_estado, fecha_creacion: fecha, fecha_actualizacion: fecha });
             res.status(201);
             res.json({ anio: await helpers.getAnio() });
         } else {
@@ -112,18 +113,17 @@ router.post('/agregar', async (req, res, next) => {
 })
 
 
-router.get('/modificar/:id', async (req, res, next) => {
+router.get('/modificar', async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.query.id;
         let publicacion = await publicacionesModel.getPublicacionById(id);
         if (!publicacion) {
             throw new Error("no se encontró la publicación solicitada");
-
         }
 
         let imagen_actual = (publicacion.imagen_id != null) ? cloudinary.image(publicacion.imagen_id, {
-            width: 100,
-            height: 100,
+            width: 200,
+            height: 200,
             crop: 'fill'
         }) : '';
 
@@ -143,11 +143,12 @@ router.get('/modificar/:id', async (req, res, next) => {
 });
 
 
-router.put('/modificar', async (req, res, next) => {
+router.patch('/modificar', async (req, res, next) => {
     try {
         let imagen_id = req.body.imagen_id_original;
+
         let borrar_imagen_anterior = false;
-        if (req.body_imagen_delete === "1") {
+        if (req.body.imagen_delete === 'true') {
             imagen_id = null;
             borrar_imagen_anterior = true;
         } else {
@@ -170,19 +171,18 @@ router.put('/modificar', async (req, res, next) => {
             imagen_id,
             fecha_actualizacion: fecha
         }
-        console.log(obj)
         if (req.body.titulo != "" && req.body.contenido != "" && req.body.precio != "") {
             await publicacionesModel.modificarPublicacionById(obj, req.body.id);
             res.status(201);
-            res.json({ anio: helpers.getAnio() });
+            res.json({ anio: await helpers.getAnio() });
 
         } else {
             throw new Error("Error al modificar novedad");
         }
     } catch (error) {
         let imagen_actual = (publicacion.imagen_id != null) ? cloudinary.image(publicacion.imagen_id, {
-            width: 100,
-            height: 100,
+            width: 200,
+            height: 200,
             crop: 'fill'
         }) : '';
 
@@ -194,8 +194,6 @@ router.put('/modificar', async (req, res, next) => {
             error: true,
             message: error
         });
-
-
     }
 })
 
