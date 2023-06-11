@@ -39,7 +39,7 @@ const AgregarPage = ({ user, loggedIn }) => {
         event.preventDefault();
         try {
             setError("")
-            const response = await axios.post("http://localhost:3000/admin/publicaciones/agregar", {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/admin/publicaciones/agregar`, {
                 titulo,
                 contenido,
                 precio,
