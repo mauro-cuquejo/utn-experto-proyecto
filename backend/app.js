@@ -27,7 +27,7 @@ app.use(fileUpload({
   tempFileDir: '/tmp/'
 }));
 
-app.use(cors({ origin: ['http://localhost:3001', "http://172.25.144.1:3001"] }));
+app.use(cors());
 
 
 app.use('/', indexRouter);

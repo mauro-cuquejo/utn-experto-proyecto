@@ -3,6 +3,9 @@ let util = require('util');
 
 let pool = mysql.createPool({
     connectionLimit: 10,
+    connectTimeout: 60 * 60 * 1000,
+    aquireTimeout: 60 * 60 * 1000,
+    timeout: 60 * 60 * 1000,
     host: process.env.MYSQL_HOST,
     port: process.env.MYSQL_PORT,
     user: process.env.MYSQL_USER,

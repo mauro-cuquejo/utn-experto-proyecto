@@ -10,7 +10,7 @@ const EliminarPage = ({ user, loggedIn }) => {
     useEffect(() => {
         const cargarEliminarPage = async () => {
             try {
-                const response = await axios.delete("http://localhost:3000/admin/publicaciones/eliminar", {
+                const response = await axios.delete(`${process.env.REACT_APP_API_URL}/admin/publicaciones/eliminar`, {
                     params: { id }
                 });
 

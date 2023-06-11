@@ -16,7 +16,7 @@ const PublicacionesPage = ({ user, loggedIn, setLoggedIn }) => {
                 setLoading(true);
                 setError(undefined);
                 try {
-                    const response = await axios.get('http://localhost:3000/admin/publicaciones', { params: { user: user } });
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/admin/publicaciones`, { params: { user: user } });
                     if (response.status === 200 || response.status === 204) {
                         setPublicaciones(response.data.publicaciones);
                     } else {

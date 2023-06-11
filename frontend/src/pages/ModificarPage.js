@@ -41,7 +41,7 @@ const ModificarPage = ({ user, loggedIn }) => {
                 navigate('/login')
             } else {
                 setError("");
-                const response = await axios.get("http://localhost:3000/admin/publicaciones/modificar", {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/admin/publicaciones/modificar`, {
                     params: { id }
                 },)
                 if (response.status === 200) {
@@ -61,7 +61,7 @@ const ModificarPage = ({ user, loggedIn }) => {
         event.preventDefault();
         try {
             setError("")
-            const response = await axios.patch("http://localhost:3000/admin/publicaciones/modificar", {
+            const response = await axios.patch(`${process.env.REACT_APP_API_URL}/admin/publicaciones/modificar`, {
                 id,
                 titulo,
                 contenido,
