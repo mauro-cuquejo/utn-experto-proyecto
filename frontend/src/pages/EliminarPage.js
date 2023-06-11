@@ -20,7 +20,7 @@ const EliminarPage = ({ user, loggedIn }) => {
                     throw new Error("No se pudo eliminar la publicación. Intente nuevamente más tarde");
                 }
             } catch (e) {
-                setError('Error en la solicitud: ' + e);
+                setError('Error en la solicitud: ' + e.response.data.message);
             }
         }
 

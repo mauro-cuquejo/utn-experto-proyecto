@@ -41,7 +41,7 @@ const ContactoPage = ({ loggedIn, setLoggedIn }) => {
                 throw new Error(response.status);
             }
         } catch (e) {
-            setError('Error al intentar enviar correo.' + e);
+            setError('Error al intentar enviar correo.' + e.response.data.message);
         }
     }
     useEffect(() => {

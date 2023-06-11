@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const PublicacionItem = (props) => {
     const { user, id, titulo, contenido, precio, imagen } = props;
     return (
-        <div className="tarjeta col-sm-8">
+        <div className="tarjeta">
             <div className="card" width="18rem">
                 <div className='publicaciones'>
                     {imagen && <div dangerouslySetInnerHTML={{ __html: imagen }} />}

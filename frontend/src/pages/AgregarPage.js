@@ -61,7 +61,7 @@ const AgregarPage = ({ user, loggedIn }) => {
                 throw new Error(response.status);
             }
         } catch (e) {
-            setError('Error en la solicitud: ' + error.message);
+            setError('Error en la solicitud: ' + e.response.data.message);
         }
     };
     return (
@@ -70,7 +70,7 @@ const AgregarPage = ({ user, loggedIn }) => {
             <div className="container" margin="100px auto">
                 <div className="row">
                     <div className="col-6 offset-3">
-                        <form onSubmit={handlerSubmit}>
+                        <form className="formulario" onSubmit={handlerSubmit}>
                             {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
                             <div className="form-group">

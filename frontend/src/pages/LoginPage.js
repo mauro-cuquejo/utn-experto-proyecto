@@ -38,8 +38,8 @@ const LoginPage = ({ setUser, loggedIn, setLoggedIn }) => {
                 setUser(undefined);
                 setLoggedIn(false);
             }
-        } catch (error) {
-            setError('Error en la solicitud' + error);
+        } catch (e) {
+            setError('Error en la solicitud: ' + e.response.data.message);
             setUser(undefined);
             setLoggedIn(false);
         }

@@ -39,11 +39,18 @@ const PublicacionesPage = ({ user, loggedIn, setLoggedIn }) => {
                 <div>
                     <h2>Publicaciones</h2>
                 </div>
+                {user &&
+                    <div >
+                        <NavLink to="/agregar" className="btn btn-primary"><i className="fa fa-plus"> Agregar Publicación</i></NavLink>
+                    </div>
+                }
                 {loading ? (
                     <p>Cargando...</p>
                 ) : (
+
                     publicaciones.map(item =>
                         <PublicacionItem
+                            key={item.id}
                             user={user}
                             id={item.id}
                             titulo={item.titulo}
@@ -52,17 +59,14 @@ const PublicacionesPage = ({ user, loggedIn, setLoggedIn }) => {
                             imagen={item.imagen}
                         />)
                 )}
-                {user && <div className="col-3 text-right">
-                    <NavLink to="/agregar" className="btn btn-primary"><i className="fa fa-plus"></i></NavLink>
-                </div>}
             </section>
         );
     } else {
         return (<section className='holder publicaciones'>
-            <p>No se encontraron publicaciones {user ? "para el usuario " + user : ""}</p>
             {user && <div className="col-3 text-right">
-                <NavLink to="/agregar" className="btn btn-primary"><i className="fa fa-plus"></i></NavLink>
+                <NavLink to="/agregar" className="btn btn-primary"><i className="fa fa-plus"> Agregar Publicación</i></NavLink>
             </div>}
+            <p>No se encontraron publicaciones {user && "para el usuario " + user}</p>
         </section>
 
         );

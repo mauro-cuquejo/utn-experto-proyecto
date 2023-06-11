@@ -3,11 +3,11 @@ let router = express.Router();
 let helpers = require('../../helpers/helpers');
 var nodemailer = require("nodemailer");
 
-//esta deberia ser parte del frontend.
+
 router.post('/', async function (req, res, next) {
     try {
         const mail = {
-            to: 'flavia.ursino@gmail.com',
+            to: process.env.SMTP_RECIPIENT,
             subject: 'Contacto web',
             html: `${req.body.nombre} se contactó a traves de la web y quiere más información a este correo:
         ${req.body.email} <br> Además, hizo el siguiente comentario: ${req.body.mensaje} <br> Su tel es:
