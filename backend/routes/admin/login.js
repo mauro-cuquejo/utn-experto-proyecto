@@ -5,17 +5,6 @@ let rolesModel = require('../../models/rolesModel')
 let estadosModel = require('../../models/estadosModel')
 let helpers = require('../../helpers/helpers');
 
-//esta deberia ser parte del frontend.
-router.get('/', async function (req, res, next) {
-    res.status(200);
-    res.json({ anio: await helpers.getAnio() })
-});
-
-router.get('/logout', async function (req, res, next) {
-    req.session.destroy();
-    res.json({ anio: await helpers.getAnio() });
-});
-
 router.post('/', async (req, res, next) => {
     try {
         let username = req.body.username;

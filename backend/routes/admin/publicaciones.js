@@ -64,13 +64,6 @@ router.get('/', async (req, res, next) => {
 });
 
 
-//esta deberia ser parte del frontend.
-router.get('/agregar', async function (req, res, next) {
-    res.sendStatus(200).json({ anio: await helpers.getAnio() })
-});
-
-
-
 router.post('/agregar', async (req, res, next) => {
     try {
         let imagen_id = "";
